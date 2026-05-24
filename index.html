@@ -60,7 +60,7 @@
 
         /* --- Bento Grid Сетка --- */
         .bento-wrapper {
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -74,7 +74,7 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-light);
             border-radius: 24px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             box-sizing: border-box;
             transition: background 0.5s, border 0.5s, box-shadow 0.3s ease;
@@ -82,6 +82,7 @@
             flex-direction: column;
             justify-content: center;
             transform-style: preserve-3d; /* Поддержка 3D для вложенных элементов */
+            position: relative;
             
             /* Эффект начального скрытия для анимации появления --- */
             opacity: 0;
@@ -104,11 +105,13 @@
 
         /* Поочередная задержка появления (Stagger эффект) для ощущения динамики */
         .hero-card { grid-column: span 2; animation-delay: 0.1s; }
-        .clock-card { grid-column: span 1; text-align: center; animation-delay: 0.2s; }
-        .media-card { grid-column: span 2; animation-delay: 0.3s; }
-        .skills-card { grid-column: span 1; animation-delay: 0.4s; }
-        .about-card { grid-column: span 1; animation-delay: 0.5s; }
-        .form-card { grid-column: span 2; text-align: left; animation-delay: 0.6s; }
+        .clock-card { grid-column: span 1; text-align: center; animation-delay: 0.15s; }
+        .media-card { grid-column: span 2; animation-delay: 0.2s; }
+        .skills-card { grid-column: span 1; animation-delay: 0.25s; }
+        .music-card { grid-column: span 1; animation-delay: 0.3s; }
+        .todo-card { grid-column: span 2; animation-delay: 0.35s; }
+        .about-card { grid-column: span 1; animation-delay: 0.4s; }
+        .form-card { grid-column: span 2; text-align: left; animation-delay: 0.45s; }
 
         /* Текстовый Логотип */
         .logo {
@@ -127,20 +130,20 @@
         }
         .logo:hover { transform: scale(1.05); }
         .logo span { -webkit-text-fill-color: initial; display: inline-block; transition: transform 0.3s ease; }
-        .logo:hover span { transform: keyframes rotateY(360deg) scale(1.2); animation: pulse 0.6s infinite alternate; }
+        .logo:hover span { transform: scale(1.2); animation: pulse 0.6s infinite alternate; }
 
         @keyframes pulse {
             to { transform: scale(1.2) cubic-bezier(0.16, 1, 0.3, 1); }
         }
 
         h1 { font-size: 2.2rem; margin: 10px 0; font-weight: 700; letter-spacing: -0.5px; }
-        h3 { font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
+        h3 { font-size: 1.25rem; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
         p { line-height: 1.6; opacity: 0.85; margin: 0 0 15px 0; }
 
         /* Стилизация адаптивного контейнера для фото кота */
         .profile-img-container {
             width: 100%;
-            height: 180px;
+            height: 160px;
             overflow: hidden;
             border-radius: 16px;
             margin-bottom: 15px;
@@ -151,10 +154,10 @@
 
         /* Современные скругленные кнопки */
         .btn {
-            padding: 12px 24px;
-            border-radius: 14px;
+            padding: 10px 20px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13.5px;
             border: none;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -162,26 +165,37 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 6px;
         }
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white !important;
         }
         .btn-primary:hover { opacity: 0.95; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(102, 126, 234, 0.25); }
+        
         .btn-success {
             background: #27ae60;
             color: white !important;
         }
         .btn-success:hover { background: #219653; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(39, 174, 96, 0.2); }
 
-        /* Виджет времени */
+        .btn-secondary {
+            background: rgba(0,0,0,0.06);
+            color: inherit;
+        }
+        .btn-secondary:hover { background: rgba(0,0,0,0.1); transform: translateY(-2px); }
+        body.dark-mode .btn-secondary { background: rgba(255,255,255,0.08); }
+        body.dark-mode .btn-secondary:hover { background: rgba(255,255,255,0.15); }
+
+        /* Виджет времени и погоды */
         .time-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 5px; font-weight: bold; }
-        .time-clock { font-size: 32px; font-weight: 700; color: #ff758f; margin: 0; transition: transform 0.3s; }
-        .clock-card:hover .time-clock { transform: scale(1.08); }
+        .time-clock { font-size: 30px; font-weight: 700; color: #ff758f; margin: 0; transition: transform 0.3s; }
+        .clock-card:hover .time-clock { transform: scale(1.06); }
+        .weather-info { font-size: 14px; font-weight: 600; margin-top: 8px; opacity: 0.85; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
         /* Тонкие аккуратные прогресс-бары с анимацией заполнения */
         .skill-item { 
-            margin-bottom: 15px; 
+            margin-bottom: 12px; 
             position: relative; 
             cursor: help;
         }
@@ -196,7 +210,7 @@
             transform: scaleX(0);
             transform-origin: left;
             animation: fillBar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.6s;
+            animation-delay: 0.4s;
         }
 
         @keyframes fillBar {
@@ -231,6 +245,33 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        /* --- КЛИКЕР-ИГРА "ПОЙМАЙ БАГА" --- */
+        .bug-game-area { margin-top: 10px; position: relative; border-radius: 12px; background: rgba(0,0,0,0.03); padding: 8px; text-align: center; overflow: hidden; }
+        body.dark-mode .bug-game-area { background: rgba(255,255,255,0.03); }
+        .game-status { font-size: 12px; font-weight: 600; opacity: 0.8; margin-bottom: 5px; }
+        .bug-target { position: absolute; font-size: 24px; cursor: pointer; user-select: none; display: none; z-index: 5; transition: transform 0.1s ease; top: 0; left: 0; }
+        .bug-target:active { transform: scale(0.8); }
+
+        /* --- ПЛЕЕР И АУДИОПУЛЬТ --- */
+        .sound-mixer { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+        .sound-btn { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.05); background: rgba(0,0,0,0.02); font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .sound-btn:hover { background: rgba(0,0,0,0.06); }
+        .sound-btn.active { background: #667eea; color: white; border-color: #667eea; }
+        body.dark-mode .sound-btn { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); }
+        body.dark-mode .sound-btn:hover { background: rgba(255,255,255,0.08); }
+        body.dark-mode .sound-btn.active { background: #4facfe; color: #100b26; border-color: #4facfe; }
+
+        /* --- ИНТЕРАКТИВНЫЙ TODO-СПИСОК --- */
+        .todo-input-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .todo-input-group input { flex: 1; padding: 10px; }
+        .todo-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .todo-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(0,0,0,0.03); border-radius: 12px; font-size: 13.5px; animation: fadeInUp 0.3s ease forwards; }
+        body.dark-mode .todo-item { background: rgba(255,255,255,0.04); }
+        .todo-text { flex: 1; cursor: pointer; text-align: left; transition: all 0.2s; font-weight: 500; }
+        .todo-text.completed { text-decoration: line-through; opacity: 0.5; }
+        .todo-delete { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; padding: 0 4px; font-weight: bold; }
+        .todo-delete:hover { transform: scale(1.2); }
 
         /* Элементы интерактивной формы */
         form { display: flex; flex-direction: column; gap: 12px; }
@@ -273,316 +314,3 @@
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, border 0.5s;
-        }
-        .theme-toggle-btn:hover { transform: scale(1.15) rotate(15deg); }
-        .theme-toggle-btn:active { transform: scale(0.95); }
-
-        /* --- Кнопка "Наверх" --- */
-        .back-to-top {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(15px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .back-to-top:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-        body.dark-mode .back-to-top {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
-        }
-
-        /* Класс вращения иконки при клике (добавляется через JS) */
-        .rotate-animation {
-            animation: rotateIcon 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes rotateIcon {
-            0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
-            100% { transform: scale(1) rotate(360deg); opacity: 1; }
-        }
-
-        /* --- СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ --- */
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-        body.dark-mode .bento-item {
-            background: var(--card-dark);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        body.dark-mode .bento-item:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        body.dark-mode .logo { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); -webkit-background-clip: text; }
-        body.dark-mode .progress-bar { background: rgba(255,255,255,0.05); }
-        body.dark-mode input, body.dark-mode textarea { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
-        body.dark-mode input:focus, body.dark-mode textarea:focus { border-color: #4facfe; background: rgba(0,0,0,0.4); }
-        body.dark-mode .theme-toggle-btn { background: var(--card-dark); border-color: var(--border-dark); color: white; }
-
-        /* --- Адаптивность для мобильных телефонов --- */
-        @media (max-width: 768px) {
-            .bento-wrapper { grid-template-columns: 1fr; gap: 15px; }
-            .hero-card, .clock-card, .media-card, .skills-card, .about-card, .form-card { grid-column: span 1; }
-            body { padding: 80px 15px 20px 15px; }
-            .social-grid { grid-template-columns: 1fr; }
-            .profile-img-container { height: 220px; }
-            .bento-item { transform: translateY(20px); }
-        }
-    </style>
-</head>
-<body>
-
-    <button class="theme-toggle-btn" id="themeToggle">🌙</button>
-    <button class="back-to-top" id="backToTop" title="Наверх">▲</button>
-
-    <div class="bento-wrapper">
-        
-        <div class="bento-item hero-card">
-            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" ondblclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
-                <span>⚡</span> Toxand.dev
-            </div>
-            <h1>Привет! Я Toxand</h1>
-            <p>Я начинающий разработчик, и это мой первый серьезный проект. Я учусь создавать красивые и функциональные сайты.</p>
-            <div>
-                <button class="btn btn-primary" onclick="document.getElementById('about-anchor').scrollIntoView({behavior: 'smooth'})">Узнать больше обо мне</button>
-            </div>
-        </div>
-
-        <div class="bento-item clock-card">
-            <p class="time-greeting" id="timeGreeting">Приветствую!</p>
-            <p class="time-clock" id="liveClock">00:00:00</p>
-        </div>
-
-        <div class="bento-item media-card">
-            <h3 style="margin-bottom: 12px;">Моё любимое видео 📺</h3>
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
-                <iframe src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-            </div>
-        </div>
-
-        <div class="bento-item skills-card">
-            <h3>Мои IT-навыки 🚀</h3>
-            <div class="skill-item" data-tooltip="Семантика, Flexbox, Grid, Адаптивность и Bento-разметка">
-                <div class="skill-name"><span>HTML / CSS</span><span>55%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 55%; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div></div>
-            </div>
-            <div class="skill-item" data-tooltip="Контроль версий, коммиты, ветки, деплой на GitHub Pages">
-                <div class="skill-name"><span>GitHub</span><span>80%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #ff758f 0%, #ff4f73 100%);"></div></div>
-            </div>
-            <div class="skill-item" data-tooltip="Поиск ошибок, отладка в DevTools, оптимизация JS">
-                <div class="skill-name"><span>Фикс багов</span><span>100%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, #42e695 0%, #3bb2b8 100%);"></div></div>
-            </div>
-        </div>
-
-        <div class="bento-item about-card" id="about-anchor">
-            <div class="profile-img-container">
-                <img src="pic.png" alt="Моё фото">
-            </div>
-            <h3>Немного обо мне 🛠️</h3>
-            <p style="font-size: 13.5px; margin: 0;">Здесь я буду рассказывать о своих хобби, проектах и увлечениях. Этот сайт — мой первый крупный успех!</p>
-        </div>
-
-        <div class="bento-item form-card">
-            <h3>Напиши мне сообщение ✉️</h3>
-            <form id="tg-form">
-                <input type="text" id="name" placeholder="Как тебя зовут?" required>
-                <textarea id="message" rows="3" placeholder="Введите ваш text здесь..." required></textarea>
-                <button type="submit" id="tg-submit-btn" class="btn btn-success" style="width: 100%;">Отправить сообщение</button>
-            </form>
-
-            <div class="social-grid">
-                <a href="https://t.me/Gd_Rst" target="_blank" class="social-btn" style="background-color: #0088cc;">Telegram</a>
-                <a href="https://vk.com/a_n_d_r_u_x_a2002" target="_blank" class="social-btn" style="background-color: #4c75a3;">ВКонтакте</a>
-                <a href="mailto:Aanduxa116@gmail.com?subject=Письмо с сайта" class="social-btn" style="background-color: #ff4d4d;">Почта</a>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // =========================================================================
-        // НАСТРОЙКИ TELEGRAM БОТА
-        // =========================================================================
-        const TELEGRAM_TOKEN = '8934906552:AAF4epj1ibh_Mq1o4Vf4MzrWU0DXXEKZ_7k'; 
-        const TELEGRAM_CHAT_ID = '8073494436';
-        // =========================================================================
-
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const timeGreeting = document.getElementById('timeGreeting');
-        const liveClock = document.getElementById('liveClock');
-        const backToTopBtn = document.getElementById('backToTop');
-
-        // Установка иконок тем на круглую кнопку
-        function setTheme(isDark) {
-            if (isDark) {
-                body.classList.add('dark-mode');
-                themeToggle.innerHTML = '☀️';
-            } else {
-                body.classList.remove('dark-mode');
-                themeToggle.innerHTML = '🌙';
-            }
-        }
-
-        function updateTimeAndGreeting() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-
-            if (hours >= 5 && hours < 12) {
-                timeGreeting.innerHTML = "Доброе утро! 🌅";
-            } else if (hours >= 12 && hours < 18) {
-                timeGreeting.innerHTML = "Добрый день! ☀️";
-            } else if (hours >= 18 && hours < 23) {
-                timeGreeting.innerHTML = "Добрый вечер! 🌆";
-            } else {
-                timeGreeting.innerHTML = "Доброй ночи! 🌙";
-            }
-
-            const prettyHours = hours < 10 ? '0' + hours : hours;
-            const prettyMinutes = minutes < 10 ? '0' + minutes : minutes;
-            const prettySeconds = seconds < 10 ? '0' + seconds : seconds;
-
-            liveClock.innerHTML = `${prettyHours}:${prettyMinutes}:${prettySeconds}`;
-        }
-
-        const currentHour = new Date().getHours();
-        const isNight = currentHour >= 18 || currentHour < 6;
-        setTheme(isNight);
-
-        updateTimeAndGreeting();
-        setInterval(updateTimeAndGreeting, 1000);
-
-        themeToggle.addEventListener('click', () => {
-            const isDarkMode = body.classList.contains('dark-mode');
-            setTheme(!isDarkMode);
-            
-            themeToggle.classList.add('rotate-animation');
-            setTimeout(() => {
-                themeToggle.classList.remove('rotate-animation');
-            }, 400);
-        });
-
-        // --- УПРАВЛЕНИЕ КНОПКОЙ "НАВЕРХ" ---
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // --- ДИНАМИЧЕСКИЙ ТЕКСТ ВКЛАДКИ БРАУЗЕРА ---
-        document.addEventListener('visibilitychange', () => {
-            document.title = document.hidden ? 'Вернись, тут интересно! 🥺' : 'Мой сайт | Toxand';
-        });
-
-        // --- ИНТЕРАКТИВНЫЙ 3D НАКЛОН (TILT EFFECT) ДЛЯ КАРТОЧЕК ---
-        const bentoItems = document.querySelectorAll('.bento-item');
-        
-        // Включаем эффект только на десктопах, чтобы не лагало на телефонах
-        if (window.innerWidth > 768) {
-            bentoItems.forEach(item => {
-                item.addEventListener('mousemove', (e) => {
-                    const rect = item.getBoundingClientRect();
-                    const x = e.clientX - rect.left; // координата X внутри карточки
-                    const y = e.clientY - rect.top;  // координата Y внутри карточки
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    // Вычисляем угол наклона (макс 7 градусов)
-                    const rotateX = ((centerY - y) / centerY) * 7;
-                    const rotateY = ((x - centerX) / centerX) * 7;
-                    
-                    item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-                });
-                
-                item.addEventListener('mouseleave', () => {
-                    item.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-                });
-            });
-        }
-
-        // --- ЛОГИКА ОТПРАВКИ ФОРМЫ В TELEGRAM-БОТА ---
-        const tgForm = document.getElementById('tg-form');
-        const tgBtn = document.getElementById('tg-submit-btn');
-
-        tgForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Останавливаем перезагрузку страницы при отправке
-
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-
-            // Формируем структуру сообщения (поддерживает HTML теги для красоты)
-            const textMessage = `🔔 <b>Новое сообщение с сайта!</b>\n\n👤 <b>Имя:</b> ${name}\n💬 <b>Текст:</b> ${message}`;
-
-            // Визуальный отклик: меняем состояние кнопки во время запроса
-            tgBtn.innerText = 'Отправка...';
-            tgBtn.disabled = true;
-
-            // AJAX запрос к Telegram API
-            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    parse_mode: 'html',
-                    text: textMessage
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    tgBtn.innerText = 'Отправлено успешно! ✓';
-                    tgBtn.style.background = '#219653';
-                    tgForm.reset(); // Сбрасываем поля ввода формы
-                } else {
-                    throw new Error();
-                }
-            })
-            .catch(() => {
-                tgBtn.innerText = 'Ошибка отправки ❌';
-                tgBtn.style.background = '#ff4d4d';
-            })
-            .finally(() => {
-                // Возвращаем кнопку в исходный вид через 3 секунды
-                setTimeout(() => {
-                    tgBtn.innerText = 'Отправить сообщение';
-                    tgBtn.style.background = '#27ae60';
-                    tgBtn.disabled = false;
-                }, 3000);
-            });
-        });
-    </script>
-</body>
-</html>
