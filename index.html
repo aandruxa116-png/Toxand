@@ -7,33 +7,51 @@
     <title>Мой первый тестовый сайт</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Красивый плавный градиент на фон вместо скучного серого цвета: */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #007bff;
+            padding: 50px 20px;
+            margin: 0;
+            min-height: 100vh;
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон */
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            /* Делаем тень более мягкой и объемной: */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
         }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
+        h1 {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        img {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        /* Стильная кнопка вместо стандартной синей ссылки */
+        .nav-button {
+            display: inline-block;
+            margin: 15px 0;
             padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+            background-color: #ff758f;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(255, 117, 143, 0.3);
         }
-        button:hover {
-            background-color: #0056b3;
+        .nav-button:hover {
+            background-color: #ff4f73;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 117, 143, 0.5);
         }
 .site-image {
     max-width: 100%;    /* Картинка не будет сжиматься и выходить за рамки сайта */
@@ -51,7 +69,7 @@
         <p>Если ты видишь эту страницу, значит, всё работает правильно.</p>
    <img src="pic.png" alt="Моя тестовая картинка" class="site-image">
 <iframe width="100%" height="250" src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px; max-width: 460px;"></iframe>
-<a href="about.html" style="display: inline-block; margin: 15px; color: #007bff;">Перейти на страницу "Обо мне"</a>
+<a href="about.html" class="nav-button">Перейти на страницу "Обо мне"</a>
         <button onclick="alert('Ура, кнопка работает!')">Нажми на меня</button>
     </div>
 
