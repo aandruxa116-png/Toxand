@@ -5,252 +5,210 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой сайт | Toxand</title>
     <style>
-        /* --- Основные styles (Светлая тема по умолчанию) --- */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Светлый градиент для фона */
-            color: #333;
-            text-align: center;
-            padding: 50px 20px;
-            margin: 0;
-            min-height: 100vh;
-            transition: background 0.5s ease, color 0.5s ease; /* Плавный переход при смене темы */
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон карточки */
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* Мягкая тень */
-            display: inline-block;
-            max-width: 600px;
-            width: 100%;
-            box-sizing: border-box;
-            transition: background 0.5s ease, box-shadow 0.5s ease;
+        /* --- Переменные для удобного управления современной палитрой --- */
+        :root {
+            --bg-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-light: rgba(255, 255, 255, 0.75);
+            --text-light: #2c3e50;
+            --border-light: rgba(255, 255, 255, 0.6);
+            
+            --bg-dark: linear-gradient(135deg, #0f0c20 0%, #15102a 100%);
+            --card-dark: rgba(23, 18, 43, 0.7);
+            --text-dark: #f3f0ff;
+            --border-dark: rgba(255, 255, 255, 0.07);
         }
 
-        /* --- Стильный Текстовый Логотип --- */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* --- Bento Grid Сетка --- */
+        .bento-wrapper {
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* --- Эффект "Матового стекла" (Glassmorphism) для карточек --- */
+        .bento-item {
+            background: var(--card-light);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, border 0.5s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Микро-взаимодействие при наведении */
+        .bento-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Распределение плиток в сетке для ПК */
+        .hero-card { grid-column: span 2; }
+        .clock-card { grid-column: span 1; text-align: center; }
+        .media-card { grid-column: span 2; }
+        .skills-card { grid-column: span 1; }
+        .about-card { grid-column: span 1; }
+        .form-card { grid-column: span 2; text-align: left; }
+
+        /* Текстовый Логотип */
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            align-self: flex-start;
             cursor: pointer;
-            transition: transform 0.3s ease;
             user-select: none;
+            transition: transform 0.3s ease;
         }
-        .logo:hover {
-            transform: scale(1.05); /* Слегка увеличивается при наведении */
-        }
-        .logo span {
-            -webkit-text-fill-color: initial; /* Смайлик остаётся цветным */
-        }
+        .logo:hover { transform: scale(1.03); }
+        .logo span { -webkit-text-fill-color: initial; }
 
-        h1 {
-            color: #2c3e50;
-            margin-top: 10px;
-            margin-bottom: 25px;
-            font-size: 2.5em;
-        }
-        h3 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        img {
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
+        h1 { font-size: 2.2rem; margin: 10px 0; font-weight: 700; letter-spacing: -0.5px; }
+        h3 { font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
+        p { line-height: 1.6; opacity: 0.85; margin: 0 0 15px 0; }
 
-        /* --- Виджет времени и приветствия --- */
-        .time-widget {
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 20px 0;
-            transition: background 0.5s ease;
-        }
-        .time-greeting {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 0 0 5px 0;
-            transition: color 0.5s ease;
-        }
-        .time-clock {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff758f;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
-        /* --- Стили для блока навыков --- */
-        .skills-block {
-            margin-top: 40px;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.03);
-            padding: 25px;
-            border-radius: 15px;
-            transition: background 0.5s ease;
-        }
-        .skill-item {
-            margin-bottom: 20px;
-        }
-        .skill-name {
-            font-size: 15px;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            transition: color 0.5s ease;
-        }
-        .progress-bar {
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 14px;
+        /* Стилизация адаптивного контейнера для фото кота */
+        .profile-img-container {
             width: 100%;
-            transition: background-color 0.5s ease;
+            height: 180px;
+            overflow: hidden;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
-        .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-        }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- Стили для кнопок --- */
+        /* Современные скругленные кнопки */
         .btn {
-            display: inline-block;
-            margin: 10px 5px;
-            padding: 12px 28px;
-            color: white !important;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
             border: none;
             cursor: pointer;
-            font-size: 15px;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
         }
-        .btn-secondary {
-            background-color: #7f8c8d;
-        }
+        .btn-primary:hover { opacity: 0.95; transform: translateY(-2px); }
         .btn-success {
-            background-color: #27ae60;
+            background: #27ae60;
+            color: white !important;
         }
+        .btn-success:hover { background: #219653; }
 
-        /* --- Стили для переключателя темы (Компактный круглый значок) --- */
+        /* Виджет времени */
+        .time-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 5px; font-weight: bold; }
+        .time-clock { font-size: 32px; font-weight: 700; color: #ff758f; margin: 0; }
+
+        /* Тонкие аккуратные прогресс-бары */
+        .skill-item { margin-bottom: 15px; }
+        .skill-item:last-child { margin-bottom: 0; }
+        .skill-name { font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; opacity: 0.9; }
+        .progress-bar { background: rgba(0,0,0,0.05); border-radius: 8px; height: 8px; width: 100%; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 8px; }
+
+        /* Элементы интерактивной формы */
+        form { display: flex; flex-direction: column; gap: 12px; }
+        input, textarea {
+            padding: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            font-family: inherit;
+            color: inherit;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus { border-color: #667eea; background: rgba(255,255,255,0.8); }
+        textarea { resize: none; }
+
+        /* Соцсети в виде аккуратной сетки кнопок */
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .social-btn { padding: 11px; border-radius: 12px; color: white !important; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center; transition: transform 0.2s; }
+        .social-btn:hover { transform: scale(1.03); }
+
+        /* Круглый значок переключения темы */
         .theme-toggle-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             width: 45px;
             height: 45px;
-            border-radius: 50%; /* Идеально круглая форма */
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 20px; /* Увеличенный размер смайлика */
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
             z-index: 1000;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s;
         }
-        .theme-toggle-btn:hover {
-            transform: scale(1.1); /* Легкое увеличение при наведении */
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .theme-toggle-btn:active {
-            transform: scale(0.95);
-        }
+        .theme-toggle-btn:hover { transform: scale(1.1); }
 
-        /* --- Стили для формы --- */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            text-align: left;
-        }
-        label {
-            font-weight: bold;
-            font-size: 14px;
-            color: #555;
-            transition: color 0.5s ease;
-        }
-        input, textarea {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
-        }
-        textarea {
-            resize: none;
-        }
-
-        /* --- СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ --- */
+        /* --- СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ (Глубокие матовые фиолетово-угольные тона) --- */
         body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16161d 100%);
-            color: #ecf0f1;
+            background: var(--bg-dark);
+            color: var(--text-dark);
         }
-        body.dark-mode .container {
-            background: rgba(30, 30, 42, 0.95);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        body.dark-mode .bento-item {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        body.dark-mode h1, body.dark-mode h3 {
-            color: #ecf0f1;
+        body.dark-mode .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-        body.dark-mode .logo {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            -webkit-background-clip: text;
-        }
-        body.dark-mode .time-greeting {
-            color: #bdc3c7;
-        }
-        body.dark-mode .time-widget {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        body.dark-mode .skill-name, body.dark-mode label {
-            color: #bdc3c7;
-        }
-        body.dark-mode .skills-block {
-            background: rgba(255, 255, 255, 0.03);
-        }
-        body.dark-mode .progress-bar {
-            background-color: #34495e;
-        }
-        body.dark-mode input, body.dark-mode textarea {
-            background-color: #2c3e50;
-            border-color: #4a5568;
-            color: #ecf0f1;
-        }
-        body.dark-mode .theme-toggle-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: #ecf0f1;
+        body.dark-mode .logo { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); -webkit-background-clip: text; }
+        body.dark-mode .progress-bar { background: rgba(255,255,255,0.05); }
+        body.dark-mode input, body.dark-mode textarea { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
+        body.dark-mode input:focus, body.dark-mode textarea:focus { border-color: #4facfe; background: rgba(0,0,0,0.4); }
+        body.dark-mode .theme-toggle-btn { background: var(--card-dark); border-color: var(--border-dark); color: white; }
+
+        /* --- Адаптивность для мобильных телефонов --- */
+        @media (max-width: 768px) {
+            .bento-wrapper { grid-template-columns: 1fr; gap: 15px; }
+            .hero-card, .clock-card, .media-card, .skills-card, .about-card, .form-card { grid-column: span 1; }
+            body { padding: 80px 15px 20px 15px; }
+            .social-grid { grid-template-columns: 1fr; }
+            .profile-img-container { height: 220px; }
         }
     </style>
 </head>
@@ -258,75 +216,70 @@
 
     <button class="theme-toggle-btn" id="themeToggle">🌙</button>
 
-    <div class="container">
+    <div class="bento-wrapper">
         
-        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" ondblclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
-            <span>⚡</span> Toxand.dev
+        <div class="bento-item hero-card">
+            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" ondblclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                <span>⚡</span> Toxand.dev
+            </div>
+            <h1>Привет! Я Toxand</h1>
+            <p>Я начинающий разработчик, и это мой первый серьезный проект. Я учусь создавать красивые и функциональные сайты.</p>
+            <div>
+                <button class="btn btn-primary" onclick="document.getElementById('about-anchor').scrollIntoView({behavior: 'smooth'})">Узнать больше обо мне</button>
+            </div>
         </div>
 
-        <h1>Привет! Я Toxand</h1>
-        
-        <div class="time-widget">
+        <div class="bento-item clock-card">
             <p class="time-greeting" id="timeGreeting">Приветствую!</p>
             <p class="time-clock" id="liveClock">00:00:00</p>
         </div>
-        
-        <p><img src="pic.png" alt="Моё фото"></p>
-        
-        <p>Я начинающий разработчик, и это мой первый серьезный проект. Я учусь создавать красивые и функциональные сайты.</p>
 
-        <button class="btn btn-primary" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Узнать больше обо мне</button>
-
-        <div style="margin-top: 30px;">
-            <h3>Моё любимое видео 📺</h3>
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);"></iframe>
+        <div class="bento-item media-card">
+            <h3 style="margin-bottom: 12px;">Моё любимое видео 📺</h3>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
+                <iframe src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+            </div>
         </div>
 
-        <div class="skills-block">
-            <h3 style="text-align: center; margin-top: 0;">Мои IT-навыки 🚀</h3>
-            
+        <div class="bento-item skills-card">
+            <h3>Мои IT-навыки 🚀</h3>
             <div class="skill-item">
-                <div class="skill-name"><span>Изучение HTML / CSS</span><span>55%</span></div>
+                <div class="skill-name"><span>HTML / CSS</span><span>55%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 55%; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div></div>
             </div>
-            
             <div class="skill-item">
-                <div class="skill-name"><span>Работа с GitHub</span><span>80%</span></div>
+                <div class="skill-name"><span>GitHub</span><span>80%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #ff758f 0%, #ff4f73 100%);"></div></div>
             </div>
-            
             <div class="skill-item">
-                <div class="skill-name"><span>Настойчивость и исправление багов</span><span>100%</span></div>
+                <div class="skill-name"><span>Фикс багов</span><span>100%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, #42e695 0%, #3bb2b8 100%);"></div></div>
             </div>
         </div>
 
-        <div id="about" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+        <div class="bento-item about-card" id="about-anchor">
+            <div class="profile-img-container">
+                <img src="pic.png" alt="Моё фото">
+            </div>
             <h3>Немного обо мне 🛠️</h3>
-            <p>Здесь я буду рассказывать о своих хобби, проектах и увлечениях. Этот сайт — мой первый крупный успех!</p>
+            <p style="font-size: 13.5px; margin: 0;">Здесь я буду рассказывать о своих хобби, проектах и увлечениях. Этот сайт — мой первый крупный успех!</p>
         </div>
 
-        <div style="margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px;">
-            <h3 style="text-align: center;">Напиши мне сообщение ✉️</h3>
+        <div class="bento-item form-card">
+            <h3>Напиши мне сообщение ✉️</h3>
             <form action="https://formspree.io/f/placeholder" method="POST">
-                <label for="name">Твое имя:</label>
                 <input type="text" id="name" name="name" placeholder="Как тебя зовут?" required>
-
-                <label for="message">Сообщение:</label>
-                <textarea id="message" name="message" rows="4" placeholder="Введите ваш текст здесь..." required></textarea>
-
-                <button type="submit" class="btn btn-success" style="width: 100%; margin: 10px 0;">Отправить сообщение</button>
+                <textarea id="message" name="message" rows="3" placeholder="Введите ваш текст здесь..." required></textarea>
+                <button type="submit" class="btn btn-success" style="width: 100%;">Отправить сообщение</button>
             </form>
-        </div>
 
-        <div style="margin-top: 30px; text-align: center; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 15px;">
-            <p style="font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #555;">Или свяжись со мной напрямую:</p>
-            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <a href="https://t.me/Gd_Rst" target="_blank" class="btn" style="background-color: #0088cc;">Telegram</a>
-                <a href="https://vk.com/a_n_d_r_u_x_a2002" target="_blank" class="btn" style="background-color: #4c75a3;">ВКонтакте</a>
-                <a href="mailto:Aanduxa116@gmail.com?subject=Письмо с сайта" class="btn" style="background-color: #ff4d4d;">Написать на почту</a>
+            <div class="social-grid">
+                <a href="https://t.me/Gd_Rst" target="_blank" class="social-btn" style="background-color: #0088cc;">Telegram</a>
+                <a href="https://vk.com/a_n_d_r_u_x_a2002" target="_blank" class="social-btn" style="background-color: #4c75a3;">ВКонтакте</a>
+                <a href="mailto:Aanduxa116@gmail.com?subject=Письмо с сайта" class="social-btn" style="background-color: #ff4d4d;">Почта</a>
             </div>
         </div>
+
     </div>
 
     <script>
@@ -335,7 +288,7 @@
         const timeGreeting = document.getElementById('timeGreeting');
         const liveClock = document.getElementById('liveClock');
 
-        // Функция для установки темы (теперь меняет только иконку)
+        // Установка иконок тем на круглую кнопку
         function setTheme(isDark) {
             if (isDark) {
                 body.classList.add('dark-mode');
@@ -346,7 +299,6 @@
             }
         }
 
-        // Функция обновления часов и приветствия
         function updateTimeAndGreeting() {
             const now = new Date();
             const hours = now.getHours();
@@ -370,7 +322,6 @@
             liveClock.innerHTML = `${prettyHours}:${prettyMinutes}:${prettySeconds}`;
         }
 
-        // Авто-включение темы
         const currentHour = new Date().getHours();
         const isNight = currentHour >= 18 || currentHour < 6;
         setTheme(isNight);
@@ -378,7 +329,6 @@
         updateTimeAndGreeting();
         setInterval(updateTimeAndGreeting, 1000);
 
-        // Переключение темы кнопкой
         themeToggle.addEventListener('click', () => {
             const isDarkMode = body.classList.contains('dark-mode');
             setTheme(!isDarkMode);
