@@ -1,17 +1,210 @@
-<button class="theme-toggle-btn" id="themeToggle">🌙 Темная тема</button>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой сайт | Toxand</title>
+    <style>
+        /* --- Основные стили (Светлая тема по умолчанию) --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Светлый градиент для фона */
+            color: #333;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+            min-height: 100vh;
+            transition: background 0.5s ease, color 0.5s ease; /* Плавный переход при смене темы */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон карточки */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* Мягкая тень */
+            display: inline-block;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        img {
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* --- Стили для блока навыков --- */
+        .skills-block {
+            margin-top: 40px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+        }
+        .skill-item {
+            margin-bottom: 20px;
+        }
+        .skill-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-bar {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 14px;
+            width: 100%;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-in-out; /* Анимация заполнения */
+        }
+
+        /* --- Стили для кнопок --- */
+        .btn {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 12px 28px;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-secondary {
+            background-color: #7f8c8d;
+        }
+        .btn-success {
+            background-color: #27ae60;
+        }
+
+        /* --- Стили для переключателя темы --- */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: none;
+        }
+        .theme-toggle-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* --- Стили для формы --- */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        textarea {
+            resize: none;
+        }
+
+        /* --- СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ --- */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16161d 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode .container {
+            background: rgba(30, 30, 42, 0.95);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        body.dark-mode h1, body.dark-mode h3 {
+            color: #ecf0f1;
+        }
+        body.dark-mode .skill-name, body.dark-mode label {
+            color: #bdc3c7;
+        }
+        body.dark-mode .skills-block {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        body.dark-mode .progress-bar {
+            background-color: #34495e;
+        }
+        body.dark-mode input, body.dark-mode textarea {
+            background-color: #2c3e50;
+            border-color: #4a5568;
+            color: #ecf0f1;
+        }
+        body.dark-mode .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle-btn" id="themeToggle">🌙 Темная тема</button>
 
     <div class="container">
         <h1>Привет! Я Toxand</h1>
         
-        <p><img src="pic.PNG" alt="Моё фото"></p>
+        <p><img src="pic.png" alt="Моё фото"></p>
         
-        <div style="margin-top: 25px;">
-            <h3 style="color: inherit; margin-bottom: 15px;">Моё любимое видео 📺</h3>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px; max-width: 460px;"></iframe>
+        <p>Я начинающий разработчик, и это мой первый серьезный проект. Я учусь создавать красивые и функциональные сайты.</p>
+
+        <button class="btn btn-primary" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Узнать больше обо мне</button>
+
+        <div style="margin-top: 30px;">
+            <h3>Моё любимое видео 📺</h3>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);"></iframe>
         </div>
 
         <div class="skills-block">
-            <h3>Мои IT-навыки 🚀</h3>
+            <h3 style="text-align: center; margin-top: 0;">Мои IT-навыки 🚀</h3>
             
             <div class="skill-item">
                 <div class="skill-name"><span>Изучение HTML / CSS</span><span>55%</span></div>
@@ -29,16 +222,41 @@
             </div>
         </div>
 
-        <a href="about.html" class="nav-button">Перейти на страницу "Обо мне"</a>
+        <div id="about" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+            <h3>Немного обо мне 🛠️</h3>
+            <p>Здесь я буду рассказывать о своих хобби, проектах и увлечениях. Этот сайт — мой первый крупный успех!</p>
+        </div>
+
+        <div style="margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px;">
+            <h3 style="text-align: center;">Напиши мне сообщение ✉️</h3>
+            <form action="https://formspree.io/f/placeholder" method="POST">
+                <label for="name">Твое имя:</label>
+                <input type="text" id="name" name="name" placeholder="Как тебя зовут?" required>
+
+                <label for="message">Сообщение:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Введите ваш текст здесь..." required></textarea>
+
+                <button type="submit" class="btn btn-success" style="width: 100%; margin: 10px 0;">Отправить сообщение</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 15px;">
+            <p style="font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #555;">Или свяжись со мной напрямую:</p>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <a href="https://t.me/твой_ник" target="_blank" class="btn btn-link" style="background-color: #0088cc;">Telegram</a>
+                <a href="https://vk.com/твой_id" target="_blank" class="btn btn-link" style="background-color: #4c75a3;">ВКонтакте</a>
+                <a href="mailto:твой-email@mail.ru?subject=Письмо с сайта" class="btn btn-link" style="background-color: #ff4d4d;">Написать на почту</a>
+            </div>
+        </div>
     </div>
 
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
-        function autoTheme() {
-            const currentHour = new Date().getHours();
-            if (currentHour >= 18 || currentHour < 6) {
+        // Функция для установки темы
+        function setTheme(isDark) {
+            if (isDark) {
                 body.classList.add('dark-mode');
                 themeToggle.innerHTML = '☀️ Светлая тема';
             } else {
@@ -47,15 +265,20 @@
             }
         }
 
+        // Авто-включение темы: темная с 18:00 до 6:00
+        function autoTheme() {
+            const currentHour = new Date().getHours();
+            const isNight = currentHour >= 18 || currentHour < 6;
+            setTheme(isNight);
+        }
+
+        // Запуск проверки времени при открытии страницы
         autoTheme();
 
+        // Переключение кнопкой вручную
         themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                themeToggle.innerHTML = '☀️ Светлая тема';
-            } else {
-                themeToggle.innerHTML = '🌙 Темная тема';
-            }
+            const isDarkMode = body.classList.contains('dark-mode');
+            setTheme(!isDarkMode); // Переключаем на противоположную
         });
     </script>
 </body>
