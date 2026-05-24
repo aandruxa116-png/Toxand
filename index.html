@@ -56,7 +56,7 @@
             flex-direction: column;
             justify-content: center;
             
-            /* Эффект начального скрытия для анимации появления */
+            /* Эффект начального скрытия для анимации появления --- */
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -253,7 +253,7 @@
             body { padding: 80px 15px 20px 15px; }
             .social-grid { grid-template-columns: 1fr; }
             .profile-img-container { height: 220px; }
-            .bento-item { transform: translateY(20px); } /* Чуть меньше сдвиг на мобильных */
+            .bento-item { transform: translateY(20px); }
         }
     </style>
 </head>
@@ -312,10 +312,10 @@
 
         <div class="bento-item form-card">
             <h3>Напиши мне сообщение ✉️</h3>
-            <form action="https://formspree.io/f/placeholder" method="POST">
-                <input type="text" id="name" name="name" placeholder="Как тебя зовут?" required>
-                <textarea id="message" name="message" rows="3" placeholder="Введите ваш text здесь..." required></textarea>
-                <button type="submit" class="btn btn-success" style="width: 100%;">Отправить сообщение</button>
+            <form id="tg-form">
+                <input type="text" id="name" placeholder="Как тебя зовут?" required>
+                <textarea id="message" rows="3" placeholder="Введите ваш text здесь..." required></textarea>
+                <button type="submit" id="tg-submit-btn" class="btn btn-success" style="width: 100%;">Отправить сообщение</button>
             </form>
 
             <div class="social-grid">
@@ -378,11 +378,64 @@
             const isDarkMode = body.classList.contains('dark-mode');
             setTheme(!isDarkMode);
             
-            // Добавляем класс анимации переключения иконки темы
             themeToggle.classList.add('rotate-animation');
             setTimeout(() => {
                 themeToggle.classList.remove('rotate-animation');
             }, 400);
+        });
+
+        // --- ЛОГИКА ОТПРАВКИ ФОРМЫ В TELEGRAM-БОТА ---
+        const tgForm = document.getElementById('tg-form');
+        const tgBtn = document.getElementById('tg-submit-btn');
+
+        tgForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Останавливаем перезагрузку страницы при отправке
+
+            // НАСТРОЙКА КЛЮЧЕЙ (Замени на свои данные)
+            const TELEGRAM_TOKEN = '8934906552:AAF4epj1ibh_Mq1o4Vf4MzrWU0DXXEKZ_7k'; 
+            const TELEGRAM_CHAT_ID = '8073494436';
+
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+
+            // Формируем структуру сообщения (поддерживает HTML теги для красоты)
+            const textMessage = `🔔 <b>Новое сообщение с сайта!</b>\n\n👤 <b>Имя:</b> ${name}\n💬 <b>Текст:</b> ${message}`;
+
+            // Визуальный отклик: меняем состояние кнопки во время запроса
+            tgBtn.innerText = 'Отправка...';
+            tgBtn.disabled = true;
+
+            // AJAX запрос к Telegram API
+            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    parse_mode: 'html',
+                    text: textMessage
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    tgBtn.innerText = 'Отправлено успешно! ✓';
+                    tgBtn.style.background = '#219653';
+                    tgForm.reset(); // Сбрасываем поля ввода формы
+                } else {
+                    throw new Error();
+                }
+            })
+            .catch(() => {
+                tgBtn.innerText = 'Ошибка отправки ❌';
+                tgBtn.style.background = '#ff4d4d';
+            })
+            .finally(() => {
+                // Возвращаем кнопку в исходный вид через 3 секунды
+                setTimeout(() => {
+                    tgBtn.innerText = 'Отправить сообщение';
+                    tgBtn.style.background = '#27ae60';
+                    tgBtn.disabled = false;
+                }, 3000);
+            });
         });
     </script>
 </body>
