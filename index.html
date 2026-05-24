@@ -104,10 +104,10 @@
 
         /* Поочередная задержка появления (Stagger эффект) для ощущения динамики */
         .hero-card { grid-column: span 2; animation-delay: 0.1s; }
-        .clock-card { grid-column: span 1; text-align: center; animation-delay: 0.2s; }
+        .terminal-card { grid-column: span 1; animation-delay: 0.2s; }
         .media-card { grid-column: span 2; animation-delay: 0.3s; }
         .skills-card { grid-column: span 1; animation-delay: 0.4s; }
-        .about-card { grid-column: span 1; animation-delay: 0.5s; }
+        .calc-card { grid-column: span 1; animation-delay: 0.5s; }
         .form-card { grid-column: span 2; text-align: left; animation-delay: 0.6s; }
 
         /* Текстовый Логотип */
@@ -137,18 +137,6 @@
         h3 { font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
         p { line-height: 1.6; opacity: 0.85; margin: 0 0 15px 0; }
 
-        /* Стилизация адаптивного контейнера для фото кота */
-        .profile-img-container {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .bento-item:hover .profile-img-container img { transform: scale(1.06); }
-
         /* Современные скругленные кнопки */
         .btn {
             padding: 12px 24px;
@@ -174,22 +162,113 @@
         }
         .btn-success:hover { background: #219653; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(39, 174, 96, 0.2); }
 
-        /* Виджет времени */
-        .time-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 5px; font-weight: bold; }
-        .time-clock { font-size: 32px; font-weight: 700; color: #ff758f; margin: 0; transition: transform 0.3s; }
-        .clock-card:hover .time-clock { transform: scale(1.08); }
-
-        /* Тонкие аккуратные прогресс-бары с анимацией заполнения */
-        .skill-item { 
-            margin-bottom: 15px; 
-            position: relative; 
-            cursor: help;
+        /* --- ИНТЕРАКТИВНЫЙ РЕТРО-ТЕРМИНАЛ --- */
+        .terminal-container {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 16px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff66;
+            text-align: left;
+            box-shadow: inset 0 0 10px rgba(0,255,102,0.2);
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .skill-item:last-child { margin-bottom: 0; }
+        body.dark-mode .terminal-container {
+            background: rgba(10, 5, 20, 0.9);
+            color: #00f2fe;
+            box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+        .terminal-output {
+            font-size: 11px;
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-bottom: 8px;
+            white-space: pre-line;
+            padding-right: 5px;
+        }
+        .terminal-line {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 5px;
+        }
+        .terminal-prefix {
+            margin-right: 5px;
+            font-weight: bold;
+        }
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+            flex-grow: 1;
+            padding: 0;
+            transform: none !important;
+        }
+        .time-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 5px; font-weight: bold; text-align: center;}
+        .time-clock { font-size: 28px; font-weight: 700; color: #ff758f; margin: 0 0 10px 0; text-align: center; transition: transform 0.3s; }
+
+        /* --- 3D FLIP КАРТОЧКИ НАВЫКОВ --- */
+        .skills-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            perspective: 1000px;
+        }
+        .flip-card {
+            background: transparent;
+            height: 55px;
+            cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flip-card-front {
+            background: transparent;
+        }
+        .flip-card-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: rotateY(180deg);
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 11px;
+            line-height: 1.3;
+            justify-content: center;
+        }
+        body.dark-mode .flip-card-back {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #0f0c20;
+            font-weight: 500;
+        }
         .skill-name { font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; opacity: 0.9; }
         .progress-bar { background: rgba(0,0,0,0.05); border-radius: 8px; height: 8px; width: 100%; overflow: hidden; }
-        
-        /* Плавное заполнение полосы при загрузке */
+        body.dark-mode .progress-bar { background: rgba(255,255,255,0.05); }
         .progress-fill { 
             height: 100%; 
             border-radius: 8px; 
@@ -198,41 +277,37 @@
             animation: fillBar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.6s;
         }
+        @keyframes fillBar { to { transform: scaleX(1); } }
 
-        @keyframes fillBar {
-            to { transform: scaleX(1); }
+        /* --- КАЛЬКУЛЯТОР СТОИМОСТИ --- */
+        .calc-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            user-select: none;
         }
+        .calc-option input {
+            cursor: pointer;
+            margin: 0;
+            accent-color: #764ba2;
+            transform: none !important;
+        }
+        body.dark-mode .calc-option input { accent-color: #00f2fe; }
+        .calc-result {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        body.dark-mode .calc-result { border-top-color: rgba(255,255,255,0.1); }
+        .price-tag { color: #27ae60; font-size: 18px; transition: all 0.3s; display: inline-block; }
+        body.dark-mode .price-tag { color: #00f2fe; }
 
-        /* --- CSS Интерактивные подсказки (Tooltips) --- */
-        .skill-item::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: #2c3e50;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 10;
-        }
-        body.dark-mode .skill-item::after {
-            background: #f3f0ff;
-            color: #15102a;
-        }
-        .skill-item:hover::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Элементы интерактивной формы */
+        /* Элементы формы */
         form { display: flex; flex-direction: column; gap: 12px; }
         input, textarea {
             padding: 12px;
@@ -248,7 +323,7 @@
         input:focus, textarea:focus { border-color: #667eea; background: rgba(255,255,255,0.8); transform: translateX(4px); }
         textarea { resize: none; }
 
-        /* Соцсети в виде аккуратной сетки кнопок */
+        /* Соцсети */
         .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .social-btn { padding: 11px; border-radius: 12px; color: white !important; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .social-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
@@ -300,55 +375,34 @@
             transform: translateY(15px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .back-to-top:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
         body.dark-mode .back-to-top {
             background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
         }
 
-        /* Класс вращения иконки при клике (добавляется через JS) */
-        .rotate-animation {
-            animation: rotateIcon 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .rotate-animation { animation: rotateIcon 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes rotateIcon {
             0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
             100% { transform: scale(1) rotate(360deg); opacity: 1; }
         }
 
         /* --- СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ --- */
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-        body.dark-mode .bento-item {
-            background: var(--card-dark);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        body.dark-mode .bento-item:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
+        body.dark-mode { background: var(--bg-dark); color: var(--text-dark); }
+        body.dark-mode .bento-item { background: var(--card-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        body.dark-mode .bento-item:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         body.dark-mode .logo { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); -webkit-background-clip: text; }
-        body.dark-mode .progress-bar { background: rgba(255,255,255,0.05); }
         body.dark-mode input, body.dark-mode textarea { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
         body.dark-mode input:focus, body.dark-mode textarea:focus { border-color: #4facfe; background: rgba(0,0,0,0.4); }
         body.dark-mode .theme-toggle-btn { background: var(--card-dark); border-color: var(--border-dark); color: white; }
 
-        /* --- Адаптивность для мобильных телефонов --- */
+        /* --- Адаптивность --- */
         @media (max-width: 768px) {
             .bento-wrapper { grid-template-columns: 1fr; gap: 15px; }
-            .hero-card, .clock-card, .media-card, .skills-card, .about-card, .form-card { grid-column: span 1; }
+            .hero-card, .terminal-card, .media-card, .skills-card, .calc-card, .form-card { grid-column: span 1; }
             body { padding: 80px 15px 20px 15px; }
             .social-grid { grid-template-columns: 1fr; }
-            .profile-img-container { height: 220px; }
             .bento-item { transform: translateY(20px); }
         }
     </style>
@@ -365,15 +419,22 @@
                 <span>⚡</span> Toxand.dev
             </div>
             <h1>Привет! Я Toxand</h1>
-            <p>Я начинающий разработчик, и это мой первый серьезный проект. Я учусь создавать красивые и функциональные сайты.</p>
+            <p>Я начинающий разработчик, создающий стильные интерфейсы. Этот интерактивный Bento-сайт — мой первый крупный успех и визитная карточка.</p>
             <div>
-                <button class="btn btn-primary" onclick="document.getElementById('about-anchor').scrollIntoView({behavior: 'smooth'})">Узнать больше обо мне</button>
+                <button class="btn btn-primary" onclick="document.getElementById('calc-anchor').scrollIntoView({behavior: 'smooth'})">Рассчитать проект</button>
             </div>
         </div>
 
-        <div class="bento-item clock-card">
+        <div class="bento-item terminal-card">
             <p class="time-greeting" id="timeGreeting">Приветствую!</p>
             <p class="time-clock" id="liveClock">00:00:00</p>
+            <div class="terminal-container">
+                <div class="terminal-output" id="terminalOutput">Введите 'help' для списка доступных команд...</div>
+                <div class="terminal-line">
+                    <span class="terminal-prefix">></span>
+                    <input type="text" class="terminal-input" id="terminalInput" placeholder="..." autocomplete="off">
+                </div>
+            </div>
         </div>
 
         <div class="bento-item media-card">
@@ -384,34 +445,76 @@
         </div>
 
         <div class="bento-item skills-card">
-            <h3>Мои IT-навыки 🚀</h3>
-            <div class="skill-item" data-tooltip="Семантика, Flexbox, Grid, Адаптивность и Bento-разметка">
-                <div class="skill-name"><span>HTML / CSS</span><span>55%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 55%; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div></div>
-            </div>
-            <div class="skill-item" data-tooltip="Контроль версий, коммиты, ветки, деплой на GitHub Pages">
-                <div class="skill-name"><span>GitHub</span><span>80%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #ff758f 0%, #ff4f73 100%);"></div></div>
-            </div>
-            <div class="skill-item" data-tooltip="Поиск ошибок, отладка в DevTools, оптимизация JS">
-                <div class="skill-name"><span>Фикс багов</span><span>100%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, #42e695 0%, #3bb2b8 100%);"></div></div>
+            <h3>Мои IT-навыки 🚀 <span style="font-size: 11px; opacity:0.6; font-weight:normal;">(кликни)</span></h3>
+            <div class="skills-grid">
+                
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="skill-name"><span>HTML / CSS</span><span>55%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 55%; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div></div>
+                        </div>
+                        <div class="flip-card-back">
+                            Семантика, Flexbox, Grid, адаптивная Bento-верстка и кастомная стилизация UI элементов.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="skill-name"><span>GitHub</span><span>80%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #ff758f 0%, #ff4f73 100%);"></div></div>
+                        </div>
+                        <div class="flip-card-back">
+                            Контроль версий, ветвление, управление коммитами и автоматический деплой через GitHub Pages.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="skill-name"><span>Фикс багов</span><span>100%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, #42e695 0%, #3bb2b8 100%);"></div></div>
+                        </div>
+                        <div class="flip-card-back">
+                            Глубокий дебаг в Chrome DevTools, оптимизация JS-логики и превращение багов в фичи!
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="bento-item about-card" id="about-anchor">
-            <div class="profile-img-container">
-                <img src="pic.png" alt="Моё фото">
+        <div class="bento-item calc-card" id="calc-anchor">
+            <h3>Калькулятор сметы 📊</h3>
+            <div style="display:flex; flex-direction:column;">
+                <label class="calc-option">
+                    <input type="checkbox" id="opt-landing" checked onchange="calculateProject()"> Landing Page (+5 000₽)
+                </label>
+                <label class="calc-option">
+                    <input type="checkbox" id="opt-multi" onchange="calculateProject()"> Многостраничник (+10 000₽)
+                </label>
+                <label class="calc-option">
+                    <input type="checkbox" id="opt-design" onchange="calculateProject()"> Индивидуальный дизайн (+4 000₽)
+                </label>
+                <label class="calc-option">
+                    <input type="checkbox" id="opt-urgent" onchange="calculateProject()"> Срочная разработка (+3 000₽)
+                </label>
+                
+                <div class="calc-result">
+                    <div>Итого: <span class="price-tag" id="calcPrice">5 000₽</span></div>
+                    <div style="font-size: 11px; opacity: 0.7; font-weight: normal; margin-top: 4px;" id="calcTime">Срок: 3-5 дней</div>
+                </div>
             </div>
-            <h3>Немного обо мне 🛠️</h3>
-            <p style="font-size: 13.5px; margin: 0;">Здесь я буду рассказывать о своих хобби, проектах и увлечениях. Этот сайт — мой первый крупный успех!</p>
         </div>
 
         <div class="bento-item form-card">
             <h3>Напиши мне сообщение ✉️</h3>
             <form id="tg-form">
                 <input type="text" id="name" placeholder="Как тебя зовут?" required>
-                <textarea id="message" rows="3" placeholder="Введите ваш text здесь..." required></textarea>
+                <textarea id="message" rows="3" placeholder="Введите ваш текст здесь..." required></textarea>
                 <button type="submit" id="tg-submit-btn" class="btn btn-success" style="width: 100%;">Отправить сообщение</button>
             </form>
 
@@ -507,21 +610,93 @@
             document.title = document.hidden ? 'Вернись, тут интересно! 🥺' : 'Мой сайт | Toxand';
         });
 
+        // --- ЛОГИКА РЕТРО ТЕРМИНАЛА ---
+        const terminalInput = document.getElementById('terminalInput');
+        const terminalOutput = document.getElementById('terminalOutput');
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                let response = '';
+
+                if (command === 'help') {
+                    response = 'Доступные команды:\n- about: Обо мне\n- skills: Мои навыки\n- clear: Очистить консоль\n- fix: Пофиксить баги';
+                } else if (command === 'about') {
+                    response = 'Toxand.dev - начинающий фронтенд-разработчик. Этот сайт — первый крупный успех, собранный с душой!';
+                } else if (command === 'skills') {
+                    response = 'HTML/CSS: 55%\nGitHub: 80%\nФикс багов: 100%';
+                } else if (command === 'clear') {
+                    terminalOutput.innerHTML = '';
+                    this.value = '';
+                    return;
+                } else if (command === 'fix') {
+                    response = '🪲 Поиск багов...\n0 ошибок обнаружено. Код идеален!';
+                } else if (command === 'matrix') {
+                    response = 'Wake up, Neo... The Matrix has you... Follow the white rabbit. 🐇';
+                } else if (command === 'cat') {
+                    response = '🐾 Мяу! Кот контролирует эту консоль.';
+                } else if (command === '') {
+                    response = '';
+                } else {
+                    response = `Команда '${command}' не найдена. Введите 'help'`;
+                }
+
+                if (response) {
+                    terminalOutput.innerHTML += `\n<span style="color:#fff">> ${this.value}</span>\n${response}`;
+                } else {
+                    terminalOutput.innerHTML += `\n<span style="color:#fff">> ${this.value}</span>`;
+                }
+                
+                this.value = '';
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+
+        // --- ЛОГИКА КАЛЬКУЛЯТОРА СТОИМОСТИ ---
+        function calculateProject() {
+            let basePrice = 0;
+            let daysMin = 0;
+            let daysMax = 0;
+
+            if (document.getElementById('opt-landing').checked) { basePrice += 5000; daysMin += 3; daysMax += 5; }
+            if (document.getElementById('opt-multi').checked) { basePrice += 10000; daysMin += 7; daysMax += 12; }
+            if (document.getElementById('opt-design').checked) { basePrice += 4000; daysMin += 1; daysMax += 2; }
+            
+            let isUrgent = document.getElementById('opt-urgent').checked;
+            if (isUrgent) { 
+                basePrice += 3000;
+                daysMin = Math.max(1, Math.floor(daysMin * 0.5));
+                daysMax = Math.max(2, Math.floor(daysMax * 0.5));
+            }
+
+            const priceEl = document.getElementById('calcPrice');
+            priceEl.innerText = basePrice.toLocaleString('ru-RU') + '₽';
+            
+            // Легкая анимация изменения цены
+            priceEl.style.transform = 'scale(1.1)';
+            setTimeout(() => priceEl.style.transform = 'scale(1)', 200);
+
+            document.getElementById('calcTime').innerText = basePrice === 0 ? 'Срок: 0 дней' : `Срок: ${daysMin}-${daysMax} дней`;
+        }
+        // Инициализация калькулятора при старте
+        calculateProject();
+
         // --- ИНТЕРАКТИВНЫЙ 3D НАКЛОН (TILT EFFECT) ДЛЯ КАРТОЧЕК ---
         const bentoItems = document.querySelectorAll('.bento-item');
         
-        // Включаем эффект только на десктопах, чтобы не лагало на телефонах
         if (window.innerWidth > 768) {
             bentoItems.forEach(item => {
                 item.addEventListener('mousemove', (e) => {
+                    // Исключаем сильный наклон для текстового инпута в терминале, чтобы удобно вводить текст
+                    if (e.target.classList.contains('terminal-input')) return;
+
                     const rect = item.getBoundingClientRect();
-                    const x = e.clientX - rect.left; // координата X внутри карточки
-                    const y = e.clientY - rect.top;  // координата Y внутри карточки
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;  
                     
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     
-                    // Вычисляем угол наклона (макс 7 градусов)
                     const rotateX = ((centerY - y) / centerY) * 7;
                     const rotateY = ((x - centerX) / centerX) * 7;
                     
@@ -539,19 +714,16 @@
         const tgBtn = document.getElementById('tg-submit-btn');
 
         tgForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Останавливаем перезагрузку страницы при отправке
+            e.preventDefault(); 
 
             const name = document.getElementById('name').value;
             const message = document.getElementById('message').value;
 
-            // Формируем структуру сообщения (поддерживает HTML теги для красоты)
             const textMessage = `🔔 <b>Новое сообщение с сайта!</b>\n\n👤 <b>Имя:</b> ${name}\n💬 <b>Текст:</b> ${message}`;
 
-            // Визуальный отклик: меняем состояние кнопки во время запроса
             tgBtn.innerText = 'Отправка...';
             tgBtn.disabled = true;
 
-            // AJAX запрос к Telegram API
             fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -565,7 +737,7 @@
                 if (response.ok) {
                     tgBtn.innerText = 'Отправлено успешно! ✓';
                     tgBtn.style.background = '#219653';
-                    tgForm.reset(); // Сбрасываем поля ввода формы
+                    tgForm.reset(); 
                 } else {
                     throw new Error();
                 }
@@ -575,7 +747,6 @@
                 tgBtn.style.background = '#ff4d4d';
             })
             .finally(() => {
-                // Возвращаем кнопку в исходный вид через 3 секунды
                 setTimeout(() => {
                     tgBtn.innerText = 'Отправить сообщение';
                     tgBtn.style.background = '#27ae60';
