@@ -45,6 +45,22 @@
         <p>Я учусь создавать сайты, и это мой первый крупный успех!</p>
         
         <a href="index.html" class="link-button">Назад на главную</a>
+<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: left;">
+            <h3 style="text-align: center; color: #333;">Напиши мне сообщение ✉️</h3>
+            
+            <form action="https://formspree.io/f/placeholder" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
+                
+                <label for="name" style="font-weight: bold; font-size: 14px;">Твое имя:</label>
+                <input type="text" id="name" name="name" placeholder="Как тебя зовут?" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+                <label for="message" style="font-weight: bold; font-size: 14px;">Сообщение:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Введите ваш текст здесь..." required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; resize: none;"></textarea>
+
+                <button type="submit" style="padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Отправить сообщение</button>
+            
+            </form>
+        </div>
+        `
     </div>
 
 </body>
