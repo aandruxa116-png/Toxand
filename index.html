@@ -29,7 +29,7 @@
         }
         h1 {
             color: #2c3e50;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
             font-size: 2.5em;
         }
         h3 {
@@ -49,6 +49,29 @@
             margin-bottom: 20px;
         }
 
+        /* --- Новый виджет времени и приветствия --- */
+        .time-widget {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            transition: background 0.5s ease;
+        }
+        .time-greeting {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 5px 0;
+            transition: color 0.5s ease;
+        }
+        .time-clock {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff758f;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
         /* --- Стили для блока навыков --- */
         .skills-block {
             margin-top: 40px;
@@ -56,6 +79,7 @@
             background: rgba(0, 0, 0, 0.03);
             padding: 25px;
             border-radius: 15px;
+            transition: background 0.5s ease;
         }
         .skill-item {
             margin-bottom: 20px;
@@ -67,6 +91,7 @@
             margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
+            transition: color 0.5s ease;
         }
         .progress-bar {
             background-color: #e0e0e0;
@@ -74,11 +99,11 @@
             overflow: hidden;
             height: 14px;
             width: 100%;
+            transition: background-color 0.5s ease;
         }
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-            transition: width 1s ease-in-out; /* Анимация заполнения */
         }
 
         /* --- Стили для кнопок --- */
@@ -141,6 +166,7 @@
             font-weight: bold;
             font-size: 14px;
             color: #555;
+            transition: color 0.5s ease;
         }
         input, textarea {
             padding: 12px;
@@ -148,6 +174,7 @@
             border-radius: 8px;
             font-family: inherit;
             font-size: 14px;
+            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
         }
         textarea {
             resize: none;
@@ -164,6 +191,12 @@
         }
         body.dark-mode h1, body.dark-mode h3 {
             color: #ecf0f1;
+        }
+        body.dark-mode .time-greeting {
+            color: #bdc3c7;
+        }
+        body.dark-mode .time-widget {
+            background: rgba(255, 255, 255, 0.04);
         }
         body.dark-mode .skill-name, body.dark-mode label {
             color: #bdc3c7;
@@ -191,6 +224,11 @@
 
     <div class="container">
         <h1>Привет! Я Toxand</h1>
+        
+        <div class="time-widget">
+            <p class="time-greeting" id="timeGreeting">Приветствую!</p>
+            <p class="time-clock" id="liveClock">00:00:00</p>
+        </div>
         
         <p><img src="pic.png" alt="Моё фото"></p>
         
@@ -243,9 +281,9 @@
         <div style="margin-top: 30px; text-align: center; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 15px;">
             <p style="font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #555;">Или свяжись со мной напрямую:</p>
             <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <a href="https://t.me/твой_ник" target="_blank" class="btn btn-link" style="background-color: #0088cc;">Telegram</a>
-                <a href="https://vk.com/твой_id" target="_blank" class="btn btn-link" style="background-color: #4c75a3;">ВКонтакте</a>
-                <a href="mailto:твой-email@mail.ru?subject=Письмо с сайта" class="btn btn-link" style="background-color: #ff4d4d;">Написать на почту</a>
+                <a href="https://t.me/Gd_Rst" target="_blank" class="btn" style="background-color: #0088cc;">Telegram</a>
+                <a href="https://vk.com/a_n_d_r_u_x_a2002" target="_blank" class="btn" style="background-color: #4c75a3;">ВКонтакте</a>
+                <a href="mailto:Aanduxa116@gmail.com?subject=Письмо с сайта" class="btn" style="background-color: #ff4d4d;">Написать на почту</a>
             </div>
         </div>
     </div>
@@ -253,6 +291,8 @@
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
+        const timeGreeting = document.getElementById('timeGreeting');
+        const liveClock = document.getElementById('liveClock');
 
         // Функция для установки темы
         function setTheme(isDark) {
@@ -265,20 +305,45 @@
             }
         }
 
-        // Авто-включение темы: темная с 18:00 до 6:00
-        function autoTheme() {
-            const currentHour = new Date().getHours();
-            const isNight = currentHour >= 18 || currentHour < 6;
-            setTheme(isNight);
+        // Функция обновления часов и умного приветствия по времени суток
+        function updateTimeAndGreeting() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // 1. Установка приветствия в зависимости от часа
+            if (hours >= 5 && hours < 12) {
+                timeGreeting.innerHTML = "Доброе утро! 🌅";
+            } else if (hours >= 12 && hours < 18) {
+                timeGreeting.innerHTML = "Добрый день! ☀️";
+            } else if (hours >= 18 && hours < 23) {
+                timeGreeting.innerHTML = "Добрый вечер! 🌆";
+            } else {
+                timeGreeting.innerHTML = "Доброй ночи! 🌙";
+            }
+
+            // 2. Форматирование вывода точных часов (добавляем нули, если цифра меньше 10)
+            const prettyHours = hours < 10 ? '0' + hours : hours;
+            const prettyMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const prettySeconds = seconds < 10 ? '0' + seconds : seconds;
+
+            liveClock.innerHTML = `${prettyHours}:${prettyMinutes}:${prettySeconds}`;
         }
 
-        // Запуск проверки времени при открытии страницы
-        autoTheme();
+        // Авто-включение темы в зависимости от времени суток при первом входе
+        const currentHour = new Date().getHours();
+        const isNight = currentHour >= 18 || currentHour < 6;
+        setTheme(isNight);
 
-        // Переключение кнопкой вручную
+        // Запуск виджета времени и его ежесекундное обновление
+        updateTimeAndGreeting();
+        setInterval(updateTimeAndGreeting, 1000);
+
+        // Переключение темы кнопкой вручную
         themeToggle.addEventListener('click', () => {
             const isDarkMode = body.classList.contains('dark-mode');
-            setTheme(!isDarkMode); // Переключаем на противоположную
+            setTheme(!isDarkMode);
         });
     </script>
 </body>
