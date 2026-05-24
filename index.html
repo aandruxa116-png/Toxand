@@ -1,10 +1,12 @@
-<div class="container">
+<button class="theme-toggle-btn" id="themeToggle">🌙 Темная тема</button>
+
+    <div class="container">
         <h1>Привет! Я Toxand</h1>
         
-        <p><img src="17162.jpg" alt="Моё фото"></p>
+        <p><img src="pic.PNG" alt="Моё фото"></p>
         
         <div style="margin-top: 25px;">
-            <h3 style="color: inherit;">Моё любимое видео 📺</h3>
+            <h3 style="color: inherit; margin-bottom: 15px;">Моё любимое видео 📺</h3>
             <iframe width="100%" height="250" src="https://www.youtube.com/embed/ByH9LuSILxU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px; max-width: 460px;"></iframe>
         </div>
 
@@ -27,7 +29,6 @@
             </div>
         </div>
 
-        <br>
         <a href="about.html" class="nav-button">Перейти на страницу "Обо мне"</a>
     </div>
 
@@ -35,7 +36,6 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
-        // Авто-определение темы по часам (Включает темную с 18:00 вечера до 6:00 утра)
         function autoTheme() {
             const currentHour = new Date().getHours();
             if (currentHour >= 18 || currentHour < 6) {
@@ -47,10 +47,8 @@
             }
         }
 
-        // Запуск проверки времени при загрузке
         autoTheme();
 
-        // Ручное переключение кнопкой
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
