@@ -27,9 +27,33 @@
             box-sizing: border-box;
             transition: background 0.5s ease, box-shadow 0.5s ease;
         }
+
+        /* --- Стильный Текстовый Логотип --- */
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+        .logo:hover {
+            transform: scale(1.05); /* Слегка увеличивается при наведении */
+        }
+        .logo span {
+            -webkit-text-fill-color: initial; /* Смайлик остаётся цветным */
+        }
+
         h1 {
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-top: 10px;
+            margin-bottom: 25px;
             font-size: 2.5em;
         }
         h3 {
@@ -49,7 +73,7 @@
             margin-bottom: 20px;
         }
 
-        /* --- Новый виджет времени и приветствия --- */
+        /* --- Виджет времени и приветствия --- */
         .time-widget {
             background: rgba(0, 0, 0, 0.03);
             border-radius: 12px;
@@ -192,6 +216,10 @@
         body.dark-mode h1, body.dark-mode h3 {
             color: #ecf0f1;
         }
+        body.dark-mode .logo {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+        }
         body.dark-mode .time-greeting {
             color: #bdc3c7;
         }
@@ -223,6 +251,11 @@
     <button class="theme-toggle-btn" id="themeToggle">🌙 Темная тема</button>
 
     <div class="container">
+        
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <span>⚡</span> Toxand.dev
+        </div>
+
         <h1>Привет! Я Toxand</h1>
         
         <div class="time-widget">
@@ -272,7 +305,7 @@
                 <input type="text" id="name" name="name" placeholder="Как тебя зовут?" required>
 
                 <label for="message">Сообщение:</label>
-                <textarea id="message" name="message" rows="4" placeholder="Введите ваш текст здесь..." required></textarea>
+                <textarea id="message" name="message" rows="4" placeholder="Введите ваш text здесь..." required></textarea>
 
                 <button type="submit" class="btn btn-success" style="width: 100%; margin: 10px 0;">Отправить сообщение</button>
             </form>
@@ -305,14 +338,13 @@
             }
         }
 
-        // Функция обновления часов и умного приветствия по времени суток
+        // Функция обновления часов и приветствия
         function updateTimeAndGreeting() {
             const now = new Date();
             const hours = now.getHours();
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
 
-            // 1. Установка приветствия в зависимости от часа
             if (hours >= 5 && hours < 12) {
                 timeGreeting.innerHTML = "Доброе утро! 🌅";
             } else if (hours >= 12 && hours < 18) {
@@ -323,7 +355,6 @@
                 timeGreeting.innerHTML = "Доброй ночи! 🌙";
             }
 
-            // 2. Форматирование вывода точных часов (добавляем нули, если цифра меньше 10)
             const prettyHours = hours < 10 ? '0' + hours : hours;
             const prettyMinutes = minutes < 10 ? '0' + minutes : minutes;
             const prettySeconds = seconds < 10 ? '0' + seconds : seconds;
@@ -331,16 +362,15 @@
             liveClock.innerHTML = `${prettyHours}:${prettyMinutes}:${prettySeconds}`;
         }
 
-        // Авто-включение темы в зависимости от времени суток при первом входе
+        // Авто-включение темы
         const currentHour = new Date().getHours();
         const isNight = currentHour >= 18 || currentHour < 6;
         setTheme(isNight);
 
-        // Запуск виджета времени и его ежесекундное обновление
         updateTimeAndGreeting();
         setInterval(updateTimeAndGreeting, 1000);
 
-        // Переключение темы кнопкой вручную
+        // Переключение темы кнопкой
         themeToggle.addEventListener('click', () => {
             const isDarkMode = body.classList.contains('dark-mode');
             setTheme(!isDarkMode);
