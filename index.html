@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой сайт | Toxand</title>
     <style>
-        /* --- Основные стили (Светлая тема по умолчанию) --- */
+        /* --- Основные styles (Светлая тема по умолчанию) --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Светлый градиент для фона */
@@ -159,24 +159,32 @@
             background-color: #27ae60;
         }
 
-        /* --- Стили для переключателя темы --- */
+        /* --- Стили для переключателя темы (Компактный круглый значок) --- */
         .theme-toggle-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             color: white;
-            padding: 10px 18px;
-            border-radius: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%; /* Идеально круглая форма */
             cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 20px; /* Увеличенный размер смайлика */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
             z-index: 1000;
             border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .theme-toggle-btn:hover {
-            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1); /* Легкое увеличение при наведении */
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .theme-toggle-btn:active {
+            transform: scale(0.95);
         }
 
         /* --- Стили для формы --- */
@@ -248,7 +256,7 @@
 </head>
 <body>
 
-    <button class="theme-toggle-btn" id="themeToggle">🌙 Темная тема</button>
+    <button class="theme-toggle-btn" id="themeToggle">🌙</button>
 
     <div class="container">
         
@@ -327,14 +335,14 @@
         const timeGreeting = document.getElementById('timeGreeting');
         const liveClock = document.getElementById('liveClock');
 
-        // Функция для установки темы
+        // Функция для установки темы (теперь меняет только иконку)
         function setTheme(isDark) {
             if (isDark) {
                 body.classList.add('dark-mode');
-                themeToggle.innerHTML = '☀️ Светлая тема';
+                themeToggle.innerHTML = '☀️';
             } else {
                 body.classList.remove('dark-mode');
-                themeToggle.innerHTML = '🌙 Темная тема';
+                themeToggle.innerHTML = '🌙';
             }
         }
 
